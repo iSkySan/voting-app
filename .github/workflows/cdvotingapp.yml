@@ -1,0 +1,29 @@
+name: Cd
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Start Docker Compose
+        run:  docker-compose up -d
+        working-directory: C:\Users\theof\OneDrive\Bureau\voting-app-main
+
+      - name: Wait for services to start
+        run: sleep 10
+
+      - name: Run Unit Test
+        run: docker-compose exec voting-app
+        working-directory: C:\Users\theof\OneDrive\Bureau\voting-app-main
+
+      - name: Stop Docker Compose
+        run: docker-compose down
+        working-directory: C:\Users\theof\OneDrive\Bureau\voting-app-main
